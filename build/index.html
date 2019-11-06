@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang ="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0"> <!--Need this tag or else @media query won't work on mobile devices-->
+    <title>Red Eden</title>
+    <link rel="icon" href="https://cdn.glitch.com/3f1b8d60-72dd-4749-b52a-b1d788645b26%2FMars.jpg?v=1566083149958">
+   
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Blinker|Crushed&display=swap');
+        @import url('https://fonts.googleapis.com/css?family=Anton&display=swap');
+        body{
+            color: cyan;
+            background-color: rgba(0,10,25,1);
+            height: 100vh;
+            width: 100vw;
+            background-image: url("https://cdn.glitch.com/3f1b8d60-72dd-4749-b52a-b1d788645b26%2FMars%20approach.jpg?v=1566081708013");
+            background-size: 100%, auto;
+            background-position: top;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            font-family: 'Blinker', sans-serif;
+        }
+        #container{
+            height: 100vh;
+            width: 100vw;
+            display: grid;
+            grid-template-columns: repeat(7, auto);
+            grid-template-rows: repeat(8, auto);
+            grid-template-areas:
+                "m v r r r ru m2"
+                "m n r r r n2 m2"
+                "m n r r r n2 m2"
+                "m n r r r n2 m2"
+                "m n r r r n2 m2"
+                "m n r r r n2 m2"
+                "m n r r r n2 m2"
+                "m g r r r ms m2";
+        }
+        #alert{
+            background-color: rgba(0,30,55,1);
+            position: fixed;
+            width: 20%;
+            left: 40%;
+            top: 20%;
+            z-index: 5; /*higher number is stacked in front of lower numbered elements*/
+            text-align: center;
+        }
+        #empty1{
+            grid-area: m;
+            width: 12vw;
+            /*width: 28.57vh;*/
+            height: 100vh;
+            background-color: rgba(255,0,0,0);
+        }
+        #empty2{
+            grid-area: m2;
+            width: 14vw;
+            height: 100vh;
+            background-color: rgba(255,0,0,0);
+        }
+        #change-password{
+            grid-area: ru;
+            margin-top: 10%;
+            text-align: center;
+        }
+        #register{
+            grid-area: ru;
+            width: 14.2857vw;
+            margin-left: 1vh;
+            margin-right: 1vh;
+            margin-top: 15%;
+            text-align: center;
+            font-size: 1.7rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        #visitor{
+            grid-area: v;
+            width: 14.2857vw;
+            margin-left: 1vh;
+            margin-right: 1vh;
+            text-align: center;
+            font-size: 1.7rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        input{
+            background-color:rgba(0,30,55,0.5);
+            border-color: rgba(0,30,55,0.5);
+            padding: 2px;
+            text-align: center;
+            color: cyan;
+            font-family: 'Blinker', sans-serif;
+        }
+        .login-input{
+            width: 90%;
+        }
+        .log-in-out{
+            background-color: rgba(0,30,55,0.5);
+            border: solid; 
+            border-color: rgba(200,30,55,0.5);
+            width: 90%;
+            padding: 6px;
+            color: cyan;
+            text-decoration: none;
+            font-family: 'Blinker', sans-serif;
+            font-size: 4vh;
+        }
+        .log-in-out:hover{
+            background-color: rgba(0,20,45,0.5);
+            border-color: rgba(255,0,0,1);
+            box-shadow: 0px 0px 8px 5px rgba(255,0,0,0.5); 
+            color: rgba(200,255,255,1);
+            text-shadow: 1px 1px 1px rgba(200,255,255);
+        }
+        .navlink{
+            background-color: rgba(0,30,55,0.5);
+            width: 14.2857vw;
+            height: 28.57vh;
+            margin-left: 1vh;
+            margin-right: 1vh;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+        }
+        .navlink:hover{
+            background-color: rgba(0,20,45,0.5);
+            box-shadow: 0px 0px 8px 5px rgba(0,255,255,0.5); 
+        }
+        #navlink{
+            grid-area: n;
+        }
+        #navlink2{
+            grid-area: n2;
+        }
+        .link{
+            text-decoration-line: none;
+            color: cyan;
+            font-family: 'Blinker', sans-serif;
+            /*font-size: 3rem;*/
+            font-size: 5vh;
+        }
+        .link:hover{
+            color: rgba(200,255,255);
+            text-shadow: 1px 1px 1px rgba(200,255,255);
+        }
+        .center{
+            grid-area: r;
+            width: 42.857vw;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            background-color: rgba(25, 25, 25,0.3);
+        }
+        .center:hover{
+            background-color: rgba(15, 15, 15,0.4);
+            box-shadow: 0px 0px 8px 5px rgba(255,0,0,0.5);
+        }
+        #home{
+            justify-content: space-between;
+        }
+        #book_title{
+            color: rgba(255,50,80,1);
+        }
+        #series{
+            font-size: 13.5vh;
+            font-family: 'Anton', sans-serif;
+            text-shadow: 1px 1px 15px rgba(255,0,0,0.5);
+            transform: scale(1.15, 1.45);
+            -webkit-transform: scale(1.15, 1.45); /* Safari and Chrome */
+            -moz-transform: scale(1.15, 1.45); /* Firefox */
+            -ms-transform: scale(1.15, 1.45); /* IE 9+ */
+            -o-transform: scale(1.15, 1.45); /* Opera */
+        }
+        #subtitle{
+            font-size: 6.75vh;
+            margin-top: -2.53vh;
+            font-family: 'Blinker', sans-serif;
+            color: white;
+            text-shadow: 1px 1px 15px rgba(255,255,255,0.5);
+        }
+        #author{
+            margin-bottom: 6rem;
+            /*font-size: 4rem;*/
+            font-size: 6.75vh;
+            font-family: 'Blinker', sans-serif;
+            text-shadow: 1px 1px 15px rgba(0,255,255,0.5);
+            /*letter-spacing: 10px;*/
+            letter-spacing: 1vh;
+        }
+        #about{
+            justify-content: space-between;
+            font-size: 1.3rem;
+        }
+        #synopsis{
+            padding-left: 5vh;
+            padding-right: 5vh;
+            background-color: rgba(25, 25, 25,0.8);
+        }
+        #forum{
+            grid-area: r;
+        }
+        #new-comment{
+            background-color: rgba(0,30,55,0.5);
+            border-color: rgba(0,30,55,0.5);
+            padding: 10px;
+            width: 60vh;
+            color: cyan;
+            font-family: 'Blinker', sans-serif;
+            font-size: 1rem;
+        }
+        .comment-buttons{
+            background-color: rgba(0,30,55,0.5);
+            border-color: rgba(255,0,0,0.5);
+            padding: 10px;
+            color: cyan;
+            font-size: 1rem;
+        }
+        #edit-comment-textarea{
+            background-color: rgba(0,30,55,0.5);  /*same as .edit-comment-buttons*/
+            border-color: rgba(255,0,0,0.5); /*same as .edit-comment-buttons*/
+            width: 90%;
+        }
+        .edit-comment-buttons{
+            background-color: rgba(0,30,55,0.5);
+            border-color: rgba(255,0,0,0.5);
+            width: 10%;
+            color: cyan;
+        }
+        #submit-edit-button{
+            width: 20%; /*I want this to be same width as the 2 edit-comment buttons combined*/
+        }
+        #comments{
+            background-color: rgba(0,30,55,0.5);
+            height: 60%;
+            margin-bottom: 5%;
+        }
+        .comment{
+            margin: 7px;
+            padding: 5px;
+            background-color: rgba(0,30,55,0.5);
+            white-space: pre-wrap;  /*pre-wrap needed to make sure line breaks encoded in string renders in html*/
+        }
+        .codex{
+            white-space: pre-wrap;
+            background-color: rgba(25, 25, 25,0.5);
+            padding: 5px;
+            color: cyan;
+        }
+        #codex-dropdown-div{
+            margin-top: 1rem;
+            font-size: 2rem;
+        }
+        #codex-dropdown{
+            background-color: rgba(25, 25, 25, 1);
+            border-color: green;
+            text-align-last: center;
+            font-size: 1.3rem;
+            width: 50%;
+        }
+        .codex-editor{
+            background-color: rgba(0,30,55,0.5);
+            width: 90%;
+            font-size: 2rem;
+        }
+        #codex-header{
+            padding-right: 5vh;
+            padding-left: 5vh;
+        }
+        #codex-body{
+            padding-bottom: 5vh;
+            padding-right: 5vh;
+            padding-left: 5vh;
+            text-align: left;
+        }
+        #codex-body-editor{
+            background-color: rgba(0,30,55,0.5);
+            color: cyan;
+            font-size: 1.3rem; 
+        }
+        .codex-buttons{
+            background-color: rgba(25, 25, 25, 1);
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            border-color: green;
+            color: cyan;
+        }
+        #admin{
+            background-color: rgba(25, 25, 25, 0.5);
+            padding-top: 6rem;
+            font-size: 1.5rem;
+        }
+        #admin-options{
+            background-color: rgba(25, 25, 25, 1);
+            text-align-last: center;
+            width: 60%;
+            font-size: 1.2rem;
+        }
+        #lore{
+            padding-top: 5vh;
+        }
+        .lore-image{
+            width: 60%;
+            border: solid;
+            border-color: blue;
+        }
+        .lore-synopsis{
+            margin-left: 20%;
+            margin-right: 20%;
+        }
+        #lore-subtitle2{
+            margin-bottom: 6rem;
+            margin-left: 2vw;
+            font-size: 4rem;
+            font-family: 'Blinker', sans-serif;
+            text-shadow: 1px 1px 15px rgba(0,255,255,0.5);
+            /*letter-spacing: 35px;*/
+            letter-spacing: 2vw;
+        }
+        .videos{
+            width: 100%;
+        }
+        iframe{
+            width: 28vw;
+            height: 14vw;
+        }
+        .images{
+            width: 65%;
+        }
+        .image-tag{
+            background-color: rgba(25, 25, 25, 0.8);
+            margin-left: 17.5%;
+            margin-right: 17.5%;
+            font-size: 1.3rem;
+        }
+        @media(max-height: 600px){
+            #app{
+                text-align: center;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+            }
+            body{
+                background-size: 100%, auto;
+                background-position-y: 65%;
+            }
+        }
+        @media(max-width: 800px){
+            body{
+                width: 100%;
+                background-size: 200%, auto;
+                background-position-y: 65%;
+                font-size: 1rem;
+            }
+            #container{
+                display: grid;
+                width: 100%;
+                grid-template-columns: repeat(2, auto);
+                grid-template-rows: repeat(6, auto);
+                grid-template-areas:
+                    " v   ru"
+                    " n   n "
+                    " n2  n2"
+                    " r   r "
+                    " r   r "
+                    " e   a ";
+            }
+            #empty1{
+                grid-area: e;
+                width: 0;
+                height: 0;
+            }
+            #empty2{
+                grid-area: a;
+                width: 0;
+                height: 0;
+            }
+            .navlink{
+                width: 100%;
+                margin-bottom: 15%;
+                background-color: rgba(0,30,55,0);
+            }
+            .link{
+                font-size: 2rem;
+            }
+            #register{
+                width: 50%;
+                margin-left: 25%;
+                margin-right: 0;
+            }
+            #change-password{
+                width: 50%;
+                margin-left: 25%;
+                margin-right: 0;
+            }
+            #visitor{
+                grid-area: v;
+                width: 50%;
+                margin-left: 25%;
+                margin-right: 0;
+            }
+            .log-in-out{
+                padding: 0;
+                width: 100%;
+                font-size: 0.8rem;
+            }
+            .center{
+                grid-area: r;
+                width: 100%;
+            }
+            #change-password{
+                text-align: left;
+            }
+            #book_title{
+                margin-top: 1%;
+            }
+            #series{
+                font-size: 4rem;
+            }
+            #subtitle{
+                font-size: 2rem;
+                margin-top: 0;
+            }
+            #author{
+                /*font-size: 2rem;
+                letter-spacing: 5px;*/
+                letter-spacing: 0.5vh;
+            }
+            iframe{
+                width: 100%;   
+            }
+        }
+      #qa-website-inject{
+        font-size: 0.7rem;
+        padding: 1vw;
+      }
+      #qa-website-inject:hover{
+        box-shadow: 0px 0px 8px 5px rgba(0,255,255,0.5);
+      }
+      #qa-website-inject-item-image-0{  
+        width:300%;
+        border: solid;
+        border-color: rgba(255,0,0,0.5);
+      }
+      #qa-website-inject-item-image-0:hover{  
+        border-color: rgba(255,0,0,0.5);
+        box-shadow: 0px 0px 8px 5px rgba(255,0,0,0.5);
+      }
+      #qa-website-inject-item-title-0{
+        font-size: 1.5vh;
+        width:400%;
+        color:red;
+      }
+      #qa-card-promoter{
+        background-color: rgba(0,30,55,1);
+        box-shadow: 0px 0px 8px 5px rgba(0,255,255,0.5);
+      }
+      #qa-card-promoter:hover{
+        box-shadow: 0px 0px 8px 8px rgba(0,255,255,0.5);
+      }
+    </style>
+</head>
+
+<body>
+  <div id="app"></div>
+  <script type="text/javascript" src="./transformed"></script>
+  
+  <!-- Staging -->  
+  <script type="text/javascript">
+    (function(j,u,k,e,b,o,x){j[b]=j[b]||function(){
+    (j[b].q=j[b].q||[]).push(arguments)},j[b].l=1*new Date();o=u.createElement(k),
+    x=u.getElementsByTagName(k)[0];o.async=1;o.src=e;x.parentNode.insertBefore(o,x)
+    })(window,document,'script','https://app.cdn.lookbookhq.com/staging2/jukebox/current/jukebox.js','lbhq');
+      lbhq('create', 'LB-49737AE8-65');
+      lbhq('_env', 'staging2');
+  </script>
+  
+  <!-- QA
+  <script type="text/javascript">
+    (function(j,u,k,e,b,o,x){j[b]=j[b]||function(){
+    (j[b].q=j[b].q||[]).push(arguments)},j[b].l=1*new Date();o=u.createElement(k),
+    x=u.getElementsByTagName(k)[0];o.async=1;o.src=e;x.parentNode.insertBefore(o,x)
+    })(window,document,'script','https://app.cdn.lookbookhq.com/qa/jukebox/current/jukebox.js','lbhq');
+      lbhq('create', 'LB-07250006-7');
+      lbhq('_env', 'qa');
+  </script>
+  -->
+</body>
+
+</html>
